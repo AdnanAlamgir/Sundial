@@ -1,0 +1,44 @@
+<h1>Welcome to Sundial!</h1>
+<p>Please provide the relevent data</p>
+<form id = 'myform' action="/get_plot" method = "post">
+    Year: <input type = "number" name ="year_1" required/><br>
+    Month: <input type = "number" name = "month_1" required/><br>
+    Day: <input type = "number" name="day_1" required/><br>
+    Latitude: <input type = "number" name="lat" required/><br>
+    Gnomon: <input type = "number" name = "height" required/><br>
+    Planet: <input list="planets" name = "planet_name">
+        <datalist id="planets">
+            <option value="Mercury">
+            <option value="Venus">
+            <option value="Earth">
+            <option value="Mars">
+            <option value="Jupiter">
+            <option value="Saturn">
+            <option value="Uranus">
+            <option value="Neptune">
+            <option value="Pluto">
+        </datalist> <br>
+    <input type="submit" value = OK />
+    <input type="button" onclick="reset()" value="Reset">
+    <br>
+</form>
+
+<script>
+    function reset(){
+        document.getElementByID("myForm").reset();
+    }
+</script>
+
+{% if plot_url %}
+    <img src = {{plot_url}} alt = "The Sundial cannot be displayed">
+{% endif %}
+
+<p>The sundial is here! This is where you are:</p>
+<table>
+<tr>
+    <th>Date</th> <th>Latitude</th>
+</tr>
+<tr>
+    <td>{{day_1}} - {{month_1}} - {{year_1}}</td>
+    <td>{{lat}}</td>
+</tr>
