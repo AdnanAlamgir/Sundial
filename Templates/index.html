@@ -1,44 +1,149 @@
-<h1>Welcome to Sundial!</h1>
-<p>Please provide the relevent data</p>
-<form id = 'myform' action="/get_plot" method = "post">
-    Year: <input type = "number" name ="year_1" required/><br>
-    Month: <input type = "number" name = "month_1" required/><br>
-    Day: <input type = "number" name="day_1" required/><br>
-    Latitude: <input type = "number" name="lat" required/><br>
-    Gnomon: <input type = "number" name = "height" required/><br>
-    Planet: <input list="planets" name = "planet_name">
-        <datalist id="planets">
-            <option value="Mercury">
-            <option value="Venus">
-            <option value="Earth">
-            <option value="Mars">
-            <option value="Jupiter">
-            <option value="Saturn">
-            <option value="Uranus">
-            <option value="Neptune">
-            <option value="Pluto">
-        </datalist> <br>
-    <input type="submit" value = OK />
-    <input type="button" onclick="reset()" value="Reset">
-    <br>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sundial</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body, html {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+        }
+
+        .content-wrapper {
+            display: flex;
+            width: 90%;
+            max-width: 12000px;
+            aspect-ratio: 16 / 9;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            width: 50%;
+            padding: 20px;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        h1 {
+            color: #333333;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        p {
+            color: #666666;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        input[type="number"],
+        input[list],
+        input[type="submit"],
+        input[type="button"] {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #dddddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        input[type="submit"],
+        input[type="button"] {
+            background-color: #00748b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover,
+        input[type="button"]:hover {
+            background-color: #00748b;
+        }
+
+        .image-container {
+            width: 70%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 2px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="content-wrapper">
+    <!-- Form Container -->
+    <div class="form-container">
+        <h1>Welcome to my Sundial!</h1>
+        <p>Please provide the relevant data.</p>
+        <form id="myForm" action="/get_plot" method="post">
+            <label for="year_1">Year:<br></label>
+            <input type="number" name="year_1" id="year_1" required /><br>
+            <label for="month_1">Month:<br></label>
+            <input type="number" name="month_1" id="month_1" required /><br>
+            <label for="day_1">Day:<br></label>
+            <input type="number" name="day_1" id="day_1" required /><br>
+            <label for="lat">Latitude:<br></label>
+            <input type="number" name="lat" id="lat" required /><br>
+            <label for="height">Gnomon Height:<br></label>
+            <input type="number" name="height" id="height" required /><br>
+            <label for="planet_name">Planet:<br></label>
+            <input list="planets" name="planet_name" id="planet_name">
+            <datalist id="planets">
+                <option value="Mercury">
+                <option value="Venus">
+                <option value="Earth">
+                <option value="Mars">
+                <option value="Jupiter">
+                <option value="Saturn">
+                <option value="Uranus">
+                <option value="Neptune">
+                <option value="Pluto">
+            </datalist><br>
+            <input type="submit" value="OK" />
+            <input type="button" onclick="resetForm()" value="Reset">
+        </form>
+    </div>
+
+    <!-- Image Container -->
+    <div class="image-container">
+        {% if plot_url %}
+            <img src="{{ plot_url }}" alt="The Sundial cannot be displayed">
+        {% else %}
+            <p>No image available</p>
+        {% endif %}
+    </div>
+</div>
 
 <script>
-    function reset(){
-        document.getElementByID("myForm").reset();
+    function resetForm(){
+        document.getElementById("myForm").reset();
     }
 </script>
 
-{% if plot_url %}
-    <img src = {{plot_url}} alt = "The Sundial cannot be displayed">
-{% endif %}
-
-<p>The sundial is here! This is where you are:</p>
-<table>
-<tr>
-    <th>Date</th> <th>Latitude</th>
-</tr>
-<tr>
-    <td>{{day_1}} - {{month_1}} - {{year_1}}</td>
-    <td>{{lat}}</td>
-</tr>
+</body>
+</html>
