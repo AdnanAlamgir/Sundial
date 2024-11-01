@@ -88,13 +88,17 @@ def gen_sundial(latitude):
     ax.set_xlim(-1, 1)
     ax.set_ylim(-1, 1)
     ax.set_aspect('equal')
+    ax.set_title('Sundial for '+ str(latitude) + ' degrees latitude', pad=25)
+   
 
     # Hide axes
-    #ax.axis('off')
+    ax.axis('off')
 
     # Show plot
+    plt.savefig('latitude_sundial.png')
     plt.show()
+  
 
 
-latitude = 60
+latitude = 25
 gen_sundial(latitude)
